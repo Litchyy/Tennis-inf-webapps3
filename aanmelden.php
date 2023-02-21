@@ -21,22 +21,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-        
-
-
-
-
-        
-        <!-- css for social icons (footer)-->
-        <link rel='stylesheet' id='jupiter-donut-shortcodes-css' href='https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Css/footer-social.css' type='text/css' media='all' />
-
-
-
-
-
-        <!-- img loader (header en footer)-->
-        <script type='text/javascript' src='https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/js/footer-image.js' id='eio-lazy-load-js'></script>
-
+    
+		<!-- css for social icons (footer)-->
+		<link rel='stylesheet' id='jupiter-donut-shortcodes-css' href='https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Css/footer-social.css' type='text/css' media='all' />
+		<!-- img loader (header en footer)-->
+		<script type='text/javascript' src='https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/js/footer-image.js' id='eio-lazy-load-js'></script>
 		<!--Menu bar bovenaan-->
 		<link rel='stylesheet' id='contact-form-7-css' href='https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Css/menubar1.css' type='text/css' media='all' />
 		<link rel='stylesheet' id='text_slider_testimonial_jquery_css-css' href='https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Css/menubar2.css' type='text/css' media='all' />
@@ -275,12 +264,7 @@
 						</div>
 					</section>
 				</header>
-
-
-
-
-
-                <!-- body input -->
+				<!-- body input -->
 				<div id="pag1" data-role="page" data-theme="b">
 					<div data-role="header">
 						<h1>Aanmelden</h1>
@@ -343,10 +327,6 @@
 					</div>
 				</div>
 				<!-- einde body input-->
-
-                                    
-
-
 				<!-- footer -->
 				<section id="mk-footer" class=" disable-on-mobile" role="contentinfo" itemscope="itemscope" itemtype="https://schema.org/WPFooter" >
 					<div class="footer-wrapper mk-grid">
@@ -407,6 +387,5 @@
 				</section>
 			</div>
 		</div>
-        
 	</body>
 </html>
