@@ -42,6 +42,50 @@
                 button.innerHTML = dropdown.value;
             }
 	    </script>
+
+        <!-- dynamic required fields -->
+        <script>
+            function toggleFields() {
+            var choice = document.getElementById("zoektype").value;
+            var voornaam = document.getElementById("voornaam");
+            var achternaam = document.getElementById("achternaam");
+            var woonplaats = document.getElementById("woonplaats");
+            var geslacht = document.getElementById("geslacht");
+            var enkel = document.getElementById("enkel");
+            var dubbel = document.getElementById("dubbel");
+            var labelvoornaam = document.getElementById("labelvoornaam");
+            var labelachternaam = document.getElementById("labelachternaam");
+            var labelwoonplaats = document.getElementById("labelwoonplaats");
+            var labelgeslacht = document.getElementById("labelgeslacht");
+            var labelenkel = document.getElementById("labelenkel");
+            var labeldubbel = document.getElementById("labeldubbel");
+            if (choice === "Zoek!") {
+                voornaam.required = true;
+                achternaam.required = true;
+                woonplaats.required = true;
+                geslacht.required = true;
+                enkel.required = true;
+                dubbel.required = true;
+                labelvoornaam.innerHTML = "Voornaam:<label style=color:red>*</label>";
+                labelachternaam.innerHTML = "Achternaam:<label style=color:red>*</label>";
+                labelwoonplaats.innerHTML = "Woonplaats:<label style=color:red>*</label>";
+                labelgeslacht.innerHTML = "Selecteer uw Geslacht:<label style=color:red>*</label>";
+                labelenkel.innerHTML = "Selecteer uw Enkel:<label style=color:red>*</label>";
+                labeldubbel.innerHTML = "Selecteer uw Dubbel:<label style=color:red>*</label>";
+            } else if (choice === "Aanpassen") {
+                voornaam.required = false;
+                achternaam.required = false;
+                voornaam.innerHTML = "Voornaam:";
+                achternaam.innerHTML = "Achternaam:";
+            } else if (choice === "Verwijder") {
+                voornaam.required = false;
+                achternaam.required = false;
+                voornaam.innerHTML = "Voornaam:";
+                achternaam.innerHTML = "Achternaam:";
+            }
+            }
+        </script>
+
         <!-- tel menu -->
 		<script type='text/javascript' data-noptimize='' data-no-minify='' src='https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/js/webfontloader.js' id='mk-webfontloader-js'></script>
 		<script type='text/javascript' src='https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/js/jqueryv3.6.1.min.js' id='jquery-core-js'></script>
@@ -309,44 +353,46 @@
 				<div id="pag1" data-role="page" data-theme="b">
 					<div data-role="header">
 						<h1 style="margin-left:20.6%">Leden zoeken/aanpassen/verwijderen</h1>
+                        <p style="margin-left:20.6%">Hier kunt u leden zoeken, aanpassen of verwijderen in de database. Als u niet weet wat u moet invullen bij <strong>zoeken</strong> vult u een punt (.) in.</p>
 					</div>
 					<div role="main" class="ui-content">
                     <div role="main" class="ui-content">
 						<form action="leden.php" method="get" style="font-size:20px">
 								<label for="zoektype" style="margin-left:20%;padding-right:40%">Ik wil leden:</label>
 								<br>
-								<select name="zoektype" id="zoektype" data-native-menu="false" data-mini="true" style="margin-left:20%;width: 56.2%" onchange="changeButtonName()">
+								<select name="zoektype" id="zoektype" data-native-menu="false" data-mini="true" style="margin-left:20%;width: 56.2%" onchange="changeButtonName(); toggleFields()" required>
+                                    <option value="">Kies uw actie!</option>
 									<option value="Zoek!">Zoeken</option>
 									<option value="Aanpassen">Aanpassen</option>
 									<option value="Verwijder">Verwijderen</option>
 								</select>
                             <br><br>
-                            <label for="lidnr" style="margin-left:20%;padding-right:50%">Lidnr:</label>
+                            <label for="lidnr" style="margin-left:20%;padding-right:50%">Lidnr:<label style=color:red>*</label></label>
                             <br>
-                            <input name="lidnr" id="lidnr" type="text" placeholder="Lidnr" value="" data-mini="true" style="margin-left:20%;width: 56.2%">
+                            <input name="lidnr" id="lidnr" type="text" placeholder="Lidnr" value="" data-mini="true" style="margin-left:20%;width: 56.2%" required>
                             <br><br>
-							<label for="voornaam" style="margin-left:20%;padding-right:50%">Voornaam:</label>
+							<label id="labelvoornaam" for="voornaam" style="margin-left:20%;padding-right:50%">Voornaam:</label>
                             <br>
-                            <input name="voornaam" id="voornaam" type="text" placeholder="Voornaam" value="" data-mini="true" style="margin-left:20%;width: 56.2%">
+                            <input name="voornaam" id="voornaam" type="text" placeholder="Voornaam" value="" data-mini="true" style="margin-left:20%;width: 56.2%" required>
                             <br><br>
                             <label for="tussenvoegsel" style="margin-left:20%;padding-right:50%">Tussenvoegsel:</label>
                             <br>
                             <input name="tussenvoegsel" id="tussenvoegsel" type="text" placeholder="Tussenvoegsel" value="" data-mini="true" style="margin-left:20%;width: 56.2%">
                             <br><br>
-                            <label for="achternaam" style="margin-left:20%;padding-right:50%">Achternaam:</label>
+                            <label id="labelachternaam" for="achternaam" style="margin-left:20%;padding-right:50%">Achternaam:</label>
                             <br>
-							<input name="achternaam" id="achternaam" type="text" placeholder="Achternaam" value="" data-mini="true" style=";margin-left:20%;width: 56.2%">
+							<input name="achternaam" id="achternaam" type="text" placeholder="Achternaam" value="" data-mini="true" style=";margin-left:20%;width: 56.2%"> 
                             <br><br>
                             <label for="geboortejaar" style="margin-left:20%;padding-right:50%">Geboortejaar:</label>
 							<br>
 							<input name="geboortejaar" id="geboortejaar" type="date" value="" data-highlight="true" data-mini="true" style="margin-left:20%;width: 56.2%;border:0;">
                             <br><br>
-							<label for="woonplaats" style="margin-left:20%;padding-right:50%">Woonplaats:</label>
+							<label id="labelwoonplaats" for="woonplaats" style="margin-left:20%;padding-right:50%">Woonplaats:</label>
 							<br>
 							<input name="woonplaats" id="woonplaats" type="text" placeholder="Woonplaats" value="" data-mini="true" style="margin-left:20%;width: 56.2%">
                             <br><br>
 							<div data-type="horizontal" data-mini="true" style="margin-left:20%;width: 56%">
-								<label for="geslacht">Selecteer uw Geslacht:</label>
+								<label id="labelgeslacht" for="geslacht">Selecteer uw Geslacht:</label>
 								<br>
 								<select name="geslacht" id="geslacht" data-native-menu="false" data-mini="true">
                                     <option value="">Geslacht</option>
@@ -357,9 +403,9 @@
 							</div>
                             <br>
 							<div data-type="horizontal" data-mini="true" style="margin-left:20%;width: 56%">
-								<label for="enkel">Selecteer uw Enkel:</label>
+								<label id="labelenkel" for="enkel">Selecteer uw Enkel:</label>
 								<br>
-								<select name="enkel" id="enkel" data-native-menu="false" data-mini="true">
+								<select name="enkel" id="enkel" data-native-menu="false" data-mini="true"> 
                                     <option value="">Enkel</option>
 									<option value="A1">A1</option>
 									<option value="A2">A2</option>
@@ -378,7 +424,7 @@
 							</div>
                             <br>
 							<div style="margin-left:20%;width: 56%" data-type="horizontal" data-mini="true">
-								<label for="dubbel">Selecteer uw Dubbel:</label>
+								<label id="labeldubbel" for="dubbel">Selecteer uw Dubbel:</label>
 								<br>
 								<select name="dubbel" id="dubbel" data-native-menu="false" data-mini="true">
                                     <option value="">Dubbel</option>
@@ -399,7 +445,7 @@
 							</div>
 							<br>
 							<label class="ui-hidden-accessible" for="verzend" style="margin-left:20%;width: 56%">Verzend:</label>
-							<button class="ui-shadow ui-btn ui-corner-all ui-mini" id="verzend" type="submit" name="verzend" style="margin-left:20%;width: 56.2%">Zoek!</button>
+							<button class="ui-shadow ui-btn ui-corner-all ui-mini" id="verzend" type="submit" name="verzend" style="margin-left:20%;width: 56.2%">Maak uw keuze bovenaan</button>
 						</form>
 						<div class="ui-body ui-corner-all" style="margin-left:19.5%;width:56%;font-size:20px;">
 							<?php
@@ -411,8 +457,14 @@
                                     $zoektype = $_GET["zoektype"];
                                     if ($zoektype == 'Zoek!')
                                     {
-                                       
-                                        $zoeken = mysqli_query($mysql,"SELECT * FROM `leden` WHERE  voornaam = '$voornaam' and geslacht = '$geslacht' or (lidnr = '$lidnr' or naam = '$dbachternaam' or adres = '$adres' or woonplaats = '$woonplaats' or enkel = '$enkel' or dubbel = '$dubbel' or geboortedatum = '$geboortedatum' or telefoonnr = '$telefoonnr')") or die("De selectquery op de database is mislukt!");
+                                        if ($tussenvoegsel == "")
+                                        {
+                                            $dbachternaam = "$achternaam";
+                                        } else {
+                                            $dbachternaam = "$tussenvoegsel $achternaam";
+                                        }
+                                        
+                                        $zoeken = mysqli_query($mysql,"SELECT * FROM `leden` WHERE  voornaam = '$voornaam' and naam = '$dbachternaam' and geslacht = '$geslacht' and lidnr = $lidnr and woonplaats = '$woonplaats' and enkel = '$enkel' and dubbel = '$dubbel'") or die("De selectquery op de database is mislukt!");
                                         $tussenvoegsel = mysqli_real_escape_string($mysql,$_GET["tussenvoegsel"]);
                                         $achternaam = mysqli_real_escape_string($mysql,$_GET["achternaam"]);
                                         
@@ -424,7 +476,36 @@
                                         }
                                         else {
                                             echo"<br><strong style=font-size:27px;>Er is een fout opgetreden:<br><br></strong>";
-                                            echo "De zoekquery heeft geen resultaten opgeleverd. Controleer de zoekcriteria en probeer het opnieuw.";
+                                            echo "De zoekquery heeft geen resultaten opgeleverd. Controleer de zoekcriteria en probeer het opnieuw.<br><br><br>";
+                                            echo"Misschien zocht u voor:<br><br>";
+                                            $mogelijk = mysqli_query($mysql,"SELECT * FROM `leden` WHERE  lidnr = $lidnr or voornaam = '$voornaam' or naam = '$dbachternaam'") or die("De selectquery op de database is mislukt!");
+
+                                            while(list($lidnr, $voornaam, $dbachternaam, $adres, $woonplaats, $telefoonnr, $geslacht, $geboortedatum, $inschrijfdatum, $enkel, $dubbel) = mysqli_fetch_row($mogelijk))
+                                            {
+                                                // echo geboortedatum d/m/Y format php
+                                                $strr = $geboortedatum;
+                                                $geboortedatumm = trim($strr, "00:00:00");
+                                                $geboortedatumm = date('d/m/Y', strtotime($geboortedatumm));
+                                                //age calc
+                                                $str = $geboortedatum;
+                                                $geboortedatum = trim($str, "00:00:00");
+                                                $geboortedatum = date('m/d/Y', strtotime($geboortedatum));
+                                                $de = date('m/d/Y', strtotime($geboortedatum));
+                                                //date in mm/dd/yyyy format; or it can be in other formats as well
+                                                $birthDate = "$de";
+                                                //explode the date to get month, day and year
+                                                $birthDate = explode("/", $birthDate);
+                                                //get age from date or birthdate
+                                                $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
+                                                    ? ((date("Y") - $birthDate[2]) - 1)
+                                                    : (date("Y") - $birthDate[2]));
+
+                                                $naam = "$voornaam $dbachternaam";
+                                                echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
+                                                <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
+                                                <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br>";
+                                                echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";
+                                            }
                                         }
                                         while(list($lidnr, $voornaam, $dbachternaam, $adres, $woonplaats, $telefoonnr, $geslacht, $geboortedatum, $inschrijfdatum, $enkel, $dubbel) = mysqli_fetch_row($zoeken))
                                         {
@@ -447,7 +528,7 @@
                                                 : (date("Y") - $birthDate[2]));
 
                                             $naam = "$voornaam $dbachternaam";
-                                            echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortejaar:</strong> $geboortedatumm<br> 
+                                            echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
                                             <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
                                             <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br>";
                                             echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";
@@ -535,7 +616,7 @@
                                                     }
         
                                                     echo "<strong style=font-size:27px;><a href='$zoekurl'>De persoon met Lidnr $id is succesvol aangepast. <br><br>Dit zijn de oude gegevens:</a><br><br></strong>";
-                                                    echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortejaar:</strong> $geboortedatumm<br> 
+                                                    echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
                                                     <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
                                                     <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br><br><strong>Uw oude contributie per seizoen:</strong> €$oudecontributie<br>";
                                                     echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br><br>";
@@ -599,7 +680,7 @@
                                                         $verschilcontributie = $verschilcontributie * -1;
                                                     }
                                                     echo "<strong style=font-size:27px;><a href='$zoekurl'>Dit zijn de nieuwe gegevens:</a><br><br></strong>";
-                                                    echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortejaar:</strong> $geboortedatumm<br> 
+                                                    echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
                                                     <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
                                                     <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br><br><strong>Uw nieuwe contributie per seizoen:</strong> €$nieuwecontributie (€$verschilcontributie $meerofminder)<br>";
                                                     echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";
@@ -607,7 +688,7 @@
                                             } else {
                                                 echo"<br><strong style=font-size:27px;>Er is een fout opgetreden:<br><br></strong>";
                                                 
-                                                echo "De persoon met lidnr: $id is niet gevonden. Controleer het lidnr en probeer het opnieuw.";
+                                                echo "De persoon met lidnr: $id is niet gevonden. Controleer het lidnr en probeer het opnieuw. Zorg ervoor dat minstens 2 velden zijn ingevuld.";
                                             }
                                         } else {
                                             echo "Error updating entry: " . mysqli_error($mysql);
@@ -659,7 +740,7 @@
 
                                             $naam = "$voornaam $dbachternaam";
 
-                                            echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortejaar:</strong> $geboortedatumm<br> 
+                                            echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
                                             <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
                                             <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br>";
                                             echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";
@@ -688,7 +769,7 @@
                                         $str = $row['geboortedatum'];
                                         $row['geboortedatum'] = trim($str, "00:00:00");
                                         $row['geboortedatum'] = date('d/m/Y', strtotime($row['geboortedatum'] ));
-                                        echo "<strong>Lidnr:</strong> {$row['lidnr']}<br><strong>Voornaam:</strong> {$row['voornaam']} <br> <strong>Achternaam:</strong> {$row['naam']} <br><strong>Geboortejaar:</strong> {$row['geboortedatum']} <br><strong>Woonplaats:</strong> {$row['woonplaats']} <br><strong>Geslacht:</strong> {$row['geslacht']} <br><strong>Enkel:</strong> {$row['enkel']} <br><strong>Dubbel:</strong> {$row['dubbel']} <br>";
+                                        echo "<strong>Lidnr:</strong> {$row['lidnr']}<br><strong>Voornaam:</strong> {$row['voornaam']} <br> <strong>Achternaam:</strong> {$row['naam']} <br><strong>Geboortedatum:</strong> {$row['geboortedatum']} <br><strong>Woonplaats:</strong> {$row['woonplaats']} <br><strong>Geslacht:</strong> {$row['geslacht']} <br><strong>Enkel:</strong> {$row['enkel']} <br><strong>Dubbel:</strong> {$row['dubbel']} <br>";
                                         echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";
             
                                     }
