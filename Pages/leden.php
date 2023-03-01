@@ -75,13 +75,33 @@
             } else if (choice === "Aanpassen") {
                 voornaam.required = false;
                 achternaam.required = false;
+                woonplaats.required = false;
+                geslacht.required = false;
+                enkel.required = false;
+                dubbel.required = false;
                 voornaam.innerHTML = "Voornaam:";
                 achternaam.innerHTML = "Achternaam:";
+                labelvoornaam.innerHTML = "Voornaam:";
+                labelachternaam.innerHTML = "Achternaam:";
+                labelwoonplaats.innerHTML = "Woonplaats:";
+                labelgeslacht.innerHTML = "Selecteer uw Geslacht:";
+                labelenkel.innerHTML = "Selecteer uw Enkel:";
+                labeldubbel.innerHTML = "Selecteer uw Dubbel:";
             } else if (choice === "Verwijder") {
                 voornaam.required = false;
                 achternaam.required = false;
+                woonplaats.required = false;
+                geslacht.required = false;
+                enkel.required = false;
+                dubbel.required = false;
                 voornaam.innerHTML = "Voornaam:";
                 achternaam.innerHTML = "Achternaam:";
+                labelvoornaam.innerHTML = "Voornaam:";
+                labelachternaam.innerHTML = "Achternaam:";
+                labelwoonplaats.innerHTML = "Woonplaats:";
+                labelgeslacht.innerHTML = "Selecteer uw Geslacht:";
+                labelenkel.innerHTML = "Selecteer uw Enkel:";
+                labeldubbel.innerHTML = "Selecteer uw Dubbel:";
             }
             }
         </script>
@@ -465,27 +485,25 @@
                                         }
                                         
                                         $zoeken = mysqli_query($mysql,"SELECT * FROM `leden` WHERE  voornaam = '$voornaam' and naam = '$dbachternaam' and geslacht = '$geslacht' and lidnr = $lidnr and woonplaats = '$woonplaats' and enkel = '$enkel' and dubbel = '$dubbel'") or die("De selectquery op de database is mislukt!");
-                                        $tussenvoegsel = mysqli_real_escape_string($mysql,$_GET["tussenvoegsel"]);
-                                        $achternaam = mysqli_real_escape_string($mysql,$_GET["achternaam"]);
-                                        
+                                        $boetes = mysqli_query($mysql,"SELECT l.*, s.gewonnen, s.verloren, b.boetenr, b.datum, b.bedrag FROM leden l LEFT JOIN scores s ON l.lidnr = s.lidnr LEFT JOIN boetes b ON l.lidnr = b.lidnr where l.lidnr = '$lidnr'") or die("De selectquery op de database is mislukt!");
+
                                         
                                         $rows_get = mysqli_num_rows($zoeken);
                                         if ($rows_get >0)
-                                        {
+                                        {   
+                                            // zoeken
                                             echo"<br><strong style=font-size:27px;>Zoekresultaten:<br><br></strong>";
-                                        }
-                                        else {
-                                            echo"<br><strong style=font-size:27px;>Er is een fout opgetreden:<br><br></strong>";
-                                            echo "De zoekquery heeft geen resultaten opgeleverd. Controleer de zoekcriteria en probeer het opnieuw.<br><br><br>";
-                                            echo"Misschien zocht u voor:<br><br>";
-                                            $mogelijk = mysqli_query($mysql,"SELECT * FROM `leden` WHERE  lidnr = $lidnr or voornaam = '$voornaam' or naam = '$dbachternaam'") or die("De selectquery op de database is mislukt!");
-
-                                            while(list($lidnr, $voornaam, $dbachternaam, $adres, $woonplaats, $telefoonnr, $geslacht, $geboortedatum, $inschrijfdatum, $enkel, $dubbel) = mysqli_fetch_row($mogelijk))
+                                            while(list($lidnr, $voornaam, $dbachternaam, $adres, $woonplaats, $telefoonnr, $geslacht, $geboortedatum, $inschrijfdatum, $enkel, $dubbel, $gewonnen, $verloren, $boetenr, $boetedatum, $boetebedrag) = mysqli_fetch_row($boetes))
                                             {
                                                 // echo geboortedatum d/m/Y format php
-                                                $strr = $geboortedatum;
-                                                $geboortedatumm = trim($strr, "00:00:00");
+                                                $geboortedatumm = trim($geboortedatum, "00:00:00");
                                                 $geboortedatumm = date('d/m/Y', strtotime($geboortedatumm));
+                                                // echo boetedatum d/m/Y format php
+                                                if ($boetedatum !== null) {
+                                                    $boetedatum = trim($boetedatum, "00:00:00");
+                                                    $boetedatum = date('d/m/Y', strtotime($boetedatum));
+                                                    $boetebedrag = "€" . $boetebedrag;
+                                                }
                                                 //age calc
                                                 $str = $geboortedatum;
                                                 $geboortedatum = trim($str, "00:00:00");
@@ -503,35 +521,57 @@
                                                 $naam = "$voornaam $dbachternaam";
                                                 echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
                                                 <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
-                                                <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br>";
+                                                <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br><br><br><label style='font-size:26px'><strong>Wedstrijdstatistieken:</strong></label><br>
+                                                <strong>Gewonnen:</strong> " . ($gewonnen ? $gewonnen : "N/A") . "<br> <strong>Verloren:</strong> " . ($verloren ? $verloren : "N/A") . " <br><br><br><label style='font-size:26px'><strong>Boetes:</strong></label><br>
+                                                <strong>Boetenr:</strong> " . ($boetenr ? $boetenr : "N/A") . "<br> 
+                                                <strong>boetedatum:</strong> " . ($boetedatum ? $boetedatum : "N/A") . "<br>
+                                                <strong>boetedrag:</strong> " . ($boetebedrag ? $boetebedrag : "N/A") . "<br>";
                                                 echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";
                                             }
                                         }
-                                        while(list($lidnr, $voornaam, $dbachternaam, $adres, $woonplaats, $telefoonnr, $geslacht, $geboortedatum, $inschrijfdatum, $enkel, $dubbel) = mysqli_fetch_row($zoeken))
-                                        {
-                                            // echo geboortedatum d/m/Y format php
-                                            $strr = $geboortedatum;
-                                            $geboortedatumm = trim($strr, "00:00:00");
-                                            $geboortedatumm = date('d/m/Y', strtotime($geboortedatumm));
-                                            //age calc
-                                            $str = $geboortedatum;
-                                            $geboortedatum = trim($str, "00:00:00");
-                                            $geboortedatum = date('m/d/Y', strtotime($geboortedatum));
-                                            $de = date('m/d/Y', strtotime($geboortedatum));
-                                            //date in mm/dd/yyyy format; or it can be in other formats as well
-                                            $birthDate = "$de";
-                                            //explode the date to get month, day and year
-                                            $birthDate = explode("/", $birthDate);
-                                            //get age from date or birthdate
-                                            $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
-                                                ? ((date("Y") - $birthDate[2]) - 1)
-                                                : (date("Y") - $birthDate[2]));
+                                        else {
+                                            // mogelijke zoekresultaten
+                                            echo"<br><strong style=font-size:27px;>Er is een fout opgetreden:<br><br></strong>";
+                                            echo "De zoekquery heeft geen resultaten opgeleverd. Controleer de zoekcriteria en probeer het opnieuw.<br><br><br>";
+                                            echo"Misschien zocht u voor:<br><br>";
+                                            $mogelijk = mysqli_query($mysql,"SELECT * FROM `leden` WHERE  lidnr = $lidnr or voornaam = '$voornaam' or naam = '$dbachternaam'") or die("De selectquery op de database is mislukt!");
+                                            $boetes = mysqli_query($mysql,"SELECT l.*, s.gewonnen, s.verloren, b.boetenr, b.datum, b.bedrag FROM leden l LEFT JOIN scores s ON l.lidnr = s.lidnr LEFT JOIN boetes b ON l.lidnr = b.lidnr where l.lidnr = '$lidnr' or l.voornaam = '$voornaam' or l.naam = '$dbachternaam'") or die("De selectquery op de database is mislukt!");
 
-                                            $naam = "$voornaam $dbachternaam";
-                                            echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
-                                            <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
-                                            <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br>";
-                                            echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";
+                                            while(list($lidnr, $voornaam, $dbachternaam, $adres, $woonplaats, $telefoonnr, $geslacht, $geboortedatum, $inschrijfdatum, $enkel, $dubbel, $gewonnen, $verloren, $boetenr, $boetedatum, $boetebedrag) = mysqli_fetch_row($boetes))
+                                            {
+                                                // echo geboortedatum d/m/Y format php
+                                                $geboortedatumm = trim($geboortedatum, "00:00:00");
+                                                $geboortedatumm = date('d/m/Y', strtotime($geboortedatumm));
+                                                // echo boetedatum d/m/Y format php
+                                                if ($boetedatum !== null) {
+                                                    $boetedatum = trim($boetedatum, "00:00:00");
+                                                    $boetedatum = date('d/m/Y', strtotime($boetedatum));
+                                                    $boetebedrag = "€" . $boetebedrag;
+                                                }
+                                                //age calc
+                                                $str = $geboortedatum;
+                                                $geboortedatum = trim($str, "00:00:00");
+                                                $geboortedatum = date('m/d/Y', strtotime($geboortedatum));
+                                                $de = date('m/d/Y', strtotime($geboortedatum));
+                                                //date in mm/dd/yyyy format; or it can be in other formats as well
+                                                $birthDate = "$de";
+                                                //explode the date to get month, day and year
+                                                $birthDate = explode("/", $birthDate);
+                                                //get age from date or birthdate
+                                                $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
+                                                    ? ((date("Y") - $birthDate[2]) - 1)
+                                                    : (date("Y") - $birthDate[2]));
+
+                                                $naam = "$voornaam $dbachternaam";
+                                                echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
+                                                <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
+                                                <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br><br><br><label style='font-size:26px'><strong>Wedstrijdstatistieken:</strong></label><br>
+                                                <strong>Gewonnen:</strong> " . ($gewonnen ? $gewonnen : "N/A") . "<br> <strong>Verloren:</strong> " . ($verloren ? $verloren : "N/A") . "<br><br><br> <label style='font-size:26px'><strong>Boetes:</strong></label><br>
+                                                <strong>Boetenr:</strong> " . ($boetenr ? $boetenr : "N/A") . "<br> 
+                                                <strong>boetedatum:</strong> " . ($boetedatum ? $boetedatum : "N/A") . "<br>
+                                                <strong>boetedrag:</strong> " . ($boetebedrag ? $boetebedrag : "N/A") . "<br>";
+                                                echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";
+                                            }
                                         }
                                     }
 
@@ -758,27 +798,49 @@
                                     // Calculate the offset for the SQL query
                                     $offset = ($page - 1) * 5;
             
-                                    // Build the SQL query with the LIMIT and OFFSET clauses
-                                    $sql = "SELECT * FROM leden ORDER BY lidnr ASC  LIMIT 5 OFFSET $offset";
-            
-                                    // Execute the query and fetch the results
-                                    $result = mysqli_query($mysql, $sql);
-            
                                     // Loop through the results and display them
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        $str = $row['geboortedatum'];
-                                        $row['geboortedatum'] = trim($str, "00:00:00");
-                                        $row['geboortedatum'] = date('d/m/Y', strtotime($row['geboortedatum'] ));
-                                        echo "<strong>Lidnr:</strong> {$row['lidnr']}<br><strong>Voornaam:</strong> {$row['voornaam']} <br> <strong>Achternaam:</strong> {$row['naam']} <br><strong>Geboortedatum:</strong> {$row['geboortedatum']} <br><strong>Woonplaats:</strong> {$row['woonplaats']} <br><strong>Geslacht:</strong> {$row['geslacht']} <br><strong>Enkel:</strong> {$row['enkel']} <br><strong>Dubbel:</strong> {$row['dubbel']} <br>";
-                                        echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";
-            
+                                    $scores = mysqli_query($mysql,"SELECT l.*, s.gewonnen, s.verloren, b.boetenr, b.datum, b.bedrag FROM leden l LEFT JOIN scores s ON l.lidnr = s.lidnr LEFT JOIN boetes b ON l.lidnr = b.lidnr order by lidnr asc LIMIT 5 OFFSET $offset") or die("De selectquery op de database is mislukt!");
+                                    $first = true;
+                                    while(list($lidnr, $voornaam, $dbachternaam, $adres, $woonplaats, $telefoonnr, $geslacht, $geboortedatum, $inschrijfdatum, $enkel, $dubbel, $gewonnen, $verloren, $boetenr, $boetedatum, $boetebedrag) = mysqli_fetch_row($scores))
+                                    {
+                                        // echo geboortedatum d/m/Y format php
+                                        $geboortedatumm = trim($geboortedatum, "00:00:00");
+                                        $geboortedatumm = date('d/m/Y', strtotime($geboortedatumm));
+                                        // echo boetedatum d/m/Y format php
+                                        if ($boetedatum !== null) {
+                                            $boetedatum = trim($boetedatum, "00:00:00");
+                                            $boetedatum = date('d/m/Y', strtotime($boetedatum));
+                                            $boetebedrag = "€" . $boetebedrag;
+                                        }
+                                        //age calc
+                                        $geboortedatum = trim($geboortedatum, "00:00:00");
+                                        $geboortedatum = date('m/d/Y', strtotime($geboortedatum));
+                                        $de = date('m/d/Y', strtotime($geboortedatum));
+                                        //date in mm/dd/yyyy format; or it can be in other formats as well
+                                        $birthDate = "$de";
+                                        //explode the date to get month, day and year
+                                        $birthDate = explode("/", $birthDate);
+                                        //get age from date or birthdate
+                                        $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
+                                            ? ((date("Y") - $birthDate[2]) - 1)
+                                            : (date("Y") - $birthDate[2]));
+
+                                        $naam = "$voornaam $dbachternaam";
+                                        echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
+                                        <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
+                                        <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br><br><br><label style='font-size:26px'><strong>Wedstrijdstatistieken:</strong></label><br>
+                                        <strong>Gewonnen:</strong> " . ($gewonnen ? $gewonnen : "N/A") . "<br> <strong>Verloren:</strong> " . ($verloren ? $verloren : "N/A") . "<br><br><br><label style='font-size:26px'><strong>Boetes:</strong></label><br><strong>Boetenr:</strong> " . ($boetenr ? $boetenr : "N/A") . "<br> 
+                                        <strong>boetedatum:</strong> " . ($boetedatum ? $boetedatum : "N/A") . "<br>
+                                        <strong>boetedrag:</strong> " . ($boetebedrag ? $boetebedrag : "N/A") . "<br>";
+                                        echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";                                       
                                     }
+                                    
                                     // Display links to the previous and next pages
                                     echo "<div>";
                                     if ($page > 1) {
                                         echo "<br><a href='leden.php?page=" . ($page - 1) . "'>Previous</a>";
                                     }
-                                    if (mysqli_num_rows($result) == 5) {
+                                    if (mysqli_num_rows($scores) == 5) {
                                         echo "<a href='leden.php?page=" . ($page + 1) . "' style='margin-left:65px'>Next</a>";
                                     }
                                     echo "</div><br>";
