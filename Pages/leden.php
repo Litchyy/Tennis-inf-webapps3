@@ -32,6 +32,8 @@
 <!DOCTYPE html>
 <html>
 	<head>
+        <link rel="stylesheet" href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Css/tel.css">
+
         <!-- favicon -->
         <link rel="shortcut icon" href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/afbeeldingen/d-tennis-logo.png"  />
         <!-- veranderd button naam afhankelijk van keuze -->
@@ -372,8 +374,8 @@
                 <!-- body input -->
 				<div id="pag1" data-role="page" data-theme="b">
 					<div data-role="header">
-						<h1 style="margin-left:20.6%">Leden zoeken/aanpassen/verwijderen</h1>
-                        <p style="margin-left:20.6%">Hier kunt u leden zoeken, aanpassen of verwijderen in de database. Als u niet weet wat u moet invullen bij <strong>zoeken</strong> vult u een punt (.) in.</p>
+						<h1 style="margin-left:20.6%;margin-right:20.6%">Leden zoeken / aanpassen / verwijderen</h1>
+                        <p style="margin-left:20.6%;margin-right:20.6%">Hier kunt u leden zoeken, aanpassen of verwijderen in de database. Als u niet weet wat u moet invullen bij <strong>zoeken</strong> vult u een punt (.) in.</p>
 					</div>
 					<div role="main" class="ui-content">
                     <div role="main" class="ui-content">
@@ -521,7 +523,7 @@
                                                 $naam = "$voornaam $dbachternaam";
                                                 echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
                                                 <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
-                                                <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br><br><br><label style='font-size:26px'><strong>Wedstrijdstatistieken:</strong></label><br>
+                                                <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br><br><br><div style='font-size: 26px;'><span class='tel-font'><strong>Wedstrijdstatistieken:</strong></span></div><br>
                                                 <strong>Gewonnen:</strong> " . ($gewonnen ? $gewonnen : "N/A") . "<br> <strong>Verloren:</strong> " . ($verloren ? $verloren : "N/A") . " <br><br><br><label style='font-size:26px'><strong>Boetes:</strong></label><br>
                                                 <strong>Boetenr:</strong> " . ($boetenr ? $boetenr : "N/A") . "<br> 
                                                 <strong>boetedatum:</strong> " . ($boetedatum ? $boetedatum : "N/A") . "<br>
@@ -565,7 +567,7 @@
                                                 $naam = "$voornaam $dbachternaam";
                                                 echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
                                                 <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
-                                                <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br><br><br><label style='font-size:26px'><strong>Wedstrijdstatistieken:</strong></label><br>
+                                                <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br><br><br><div style='font-size: 26px;'><span class='tel-font'><strong>Wedstrijdstatistieken:</strong></span></div><br>
                                                 <strong>Gewonnen:</strong> " . ($gewonnen ? $gewonnen : "N/A") . "<br> <strong>Verloren:</strong> " . ($verloren ? $verloren : "N/A") . "<br><br><br> <label style='font-size:26px'><strong>Boetes:</strong></label><br>
                                                 <strong>Boetenr:</strong> " . ($boetenr ? $boetenr : "N/A") . "<br> 
                                                 <strong>boetedatum:</strong> " . ($boetedatum ? $boetedatum : "N/A") . "<br>
@@ -828,7 +830,7 @@
                                         $naam = "$voornaam $dbachternaam";
                                         echo"<strong>Lidnr:</strong> $lidnr <br><strong>Naam:</strong> $naam <br><strong>Voornaam:</strong> $voornaam <br> <strong>Achternaam:</strong> $dbachternaam <br> <strong>Geboortedatum:</strong> $geboortedatumm<br> 
                                         <strong>Leeftijd:</strong> $age jaar<br><strong>Adres:</strong> $adres <br><strong>Woonplaats:</strong> $woonplaats<br><strong>Telefoonnummer:</strong> $telefoonnr<br><strong>Geslacht:</strong> $geslacht<br> 
-                                        <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br><br><br><label style='font-size:26px'><strong>Wedstrijdstatistieken:</strong></label><br>
+                                        <strong>Enkel:</strong> $enkel<br> <strong>Dubbel:</strong> $dubbel<br><br><br><div style='font-size: 26px;'><span class='tel-font'><strong>Wedstrijdstatistieken:</strong></span></div><br>
                                         <strong>Gewonnen:</strong> " . ($gewonnen ? $gewonnen : "N/A") . "<br> <strong>Verloren:</strong> " . ($verloren ? $verloren : "N/A") . "<br><br><br><label style='font-size:26px'><strong>Boetes:</strong></label><br><strong>Boetenr:</strong> " . ($boetenr ? $boetenr : "N/A") . "<br> 
                                         <strong>boetedatum:</strong> " . ($boetedatum ? $boetedatum : "N/A") . "<br>
                                         <strong>boetedrag:</strong> " . ($boetebedrag ? $boetebedrag : "N/A") . "<br>";
