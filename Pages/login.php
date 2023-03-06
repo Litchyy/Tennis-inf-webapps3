@@ -1,22 +1,73 @@
 <?php
-	header('Content-Type: text/html; charset=utf-8');
-	session_start();
-	include "connect.php";
-	// Hier wordt gecontroleerd of er op de zoek-knop is geklikt
-	if(isset($_GET["verzend"]))
-	{
-        // Hier wordt connectie gemaakt met de database
-        $mysql = mysqli_connect($server,$user,$pass,$db) or die("Fout: Er is geen verbinding met de MySQL-server tot stand gebracht!");
-        // Ingevulde gegevens veilig ophalen uit het formulier
-        $teamcode = mysqli_real_escape_string($mysql,$_GET["teamcode"]);
-        $lidnr = mysqli_real_escape_string($mysql,$_GET["lidnr"]);
+session_start();
+include "connect.php";
+$registererror = false;
+$registerduplicate = false;
+$loginerror = false;
+$camefromregister = $_SESSION['camefromregister'];
+$usermail = $_SESSION['newusermail'];
+// Register the user
+if(isset($_POST['submit'])){
+    $mysql = mysqli_connect($server,$user,$pass,$db) or die("Fout: Er is geen verbinding met de MySQL-server tot stand gebracht!");
 
-        // Gegevens opvragen uit de database
-        $toegevoegd = mysqli_query($mysql,"SELECT * FROM `scores` WHERE  lidnr = '$lidnr' OR teamcode = '$teamcode'
-        AND (lidnr = '$lidnr' OR teamcode = '$teamcode')") or die("De selectquery op de database is mislukt!");
-        mysqli_close($mysql) or die("Het verbreken van de verbinding met de MySQL-server is mislukt!");
-	}
-	?>
+    $lidnr = $_POST['lidnr'];
+
+    // redirect
+    $sql = "SELECT lidnr from `leden` where lidnr = '$lidnr'";
+    $result = mysqli_query($mysql, $sql);
+    $sqlduplicate = "SELECT lidnr from `accounts` where lidnr = '$lidnr'";
+    $duplicate = mysqli_query($mysql, $sqlduplicate);
+    if (mysqli_num_rows($result) == 1) {
+        if (mysqli_num_rows($duplicate) >= 1) {
+            $registerduplicate = true;
+        } else {
+            $_SESSION['registerlidnr'] = $lidnr;
+            header('Location: registreren.php');
+        }
+    } else {
+        $registererror = true;
+    }
+    mysqli_close($mysql);
+}
+
+// Login the user
+if (isset($_SESSION['email'])) {
+    // User is already logged in, redirect to home page or display an error message
+    header("Location: account.php");
+}
+if(isset($_POST['login'])){
+    $mysql = mysqli_connect($server,$user,$pass,$db) or die("Fout: Er is geen verbinding met de MySQL-server tot stand gebracht!");
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Check if the email and password combination exist in the database
+    $sql = "SELECT * FROM accounts WHERE (username = '$email' or email='$email') AND password='$password'";
+    $result = mysqli_query($mysql, $sql);
+    if (isset($_SESSION['email'])) {
+        // User is already logged in, redirect to home page or display an error message
+        echo"U bent al ingelogd.";
+        header("Location: account.php");
+        exit();
+    }
+
+    if (mysqli_num_rows($result) == 1) {
+        // Start the session and redirect to the welcome page
+        $ingelogd = true;
+        $_SESSION['email'] = $email;
+        $_SESSION['lidnr'] = $lidnr;
+        header('Location: account.php');
+    } else {
+        $loginerror = true;
+    }
+    mysqli_close($mysql);
+}
+
+// Close the connection
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -73,7 +124,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta name="format-detection" content="telephone=no">
-		<title>Scores &#8211; D Tennis</title>
+		<title>Inloggen &#8211; D Tennis</title>
 		<style id='global-styles-inline-css' type='text/css'>
 			body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;}:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
 			.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
@@ -114,7 +165,7 @@
 			.header-style-3 .mk-header-padding-wrapper { padding-top:211px; } 
 			.mk-process-steps[max-width~="950px"] ul::before { display:none !important; } 
 			.mk-process-steps[max-width~="950px"] li { margin-bottom:30px !important; width:100% !important; text-align:center; } 
-			.mk-event-countdown-ul[max-width~="750px"] li { width:90%; display:block; margin:0 auto 15px; } body { font-family: graphik,arial,helvetica,sans-serif; } 
+			.mk-event-countdown-ul[max-width~="750px"] li { width:90%; display:block; margin:0 auto 15px; } body { font-family:Open Sans } 
 			@font-face { font-family:'star'; src:url('https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/stylesheet/fonts/star/font.eot'); 
 			src:url('https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/stylesheet/fonts/star/font.eot?#iefix') format('embedded-opentype'), 
 			url('https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/stylesheet/fonts/star/font.woff') format('woff'), url('https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/stylesheet/fonts/star/font.ttf') format('truetype'), url('https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/stylesheet/fonts/star/font.svg#star') format('svg'); font-weight:normal; font-style:normal; } 
@@ -141,7 +192,12 @@
 			.qcf-style.default #submit:hover{background:#888888;}
 		</style>
 		<style type="text/css" id="wp-custom-css">
-			.menu-button a { 
+            #menu-main-menu li:last-child {
+                float: right;
+            }
+            
+			.menu-button a {
+            
 			border: 2px solid #4b0082; /* button border width and color */
 			color: #E47405;    /* text color */
 			line-height: initial;  /* reset the line-height. Let padding control size */
@@ -273,9 +329,9 @@
 					<div class="mk-header-padding-wrapper"></div>
 					<section id="mk-page-introduce" class="intro-left">
 						<div class="mk-grid">
-							<h1 class="page-title" style=text-align:center>Scores</h1>
+							<h1 class="page-title" style=text-align:center>Inloggen</h1>
 							<div id="mk-breadcrumbs">
-								<div class="mk-breadcrumbs-inner"><span xmlns:v="http://rdf.data-vocabulary.org/#"><span typeof="v:Breadcrumb"><a href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/index.php" rel="v:url" property="v:title">Home</a> &#47; <span rel="v:child" typeof="v:Breadcrumb">Scores</span></span></span></div>
+								<div class="mk-breadcrumbs-inner"><span xmlns:v="http://rdf.data-vocabulary.org/#"><span typeof="v:Breadcrumb"><a href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/index.php" rel="v:url" property="v:title">Home</a> &#47; <span rel="v:child" typeof="v:Breadcrumb">Inloggen</span></span></span></div>
 							</div>
 							<div class="clearboth"></div>
 						</div>
@@ -287,104 +343,54 @@
 
 
                 <!-- body input -->
+                <link rel='stylesheet' href='https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Css/centerform.css' type='text/css' media='all' />
 				<div id="pag1" data-role="page" data-theme="b">
-					<div data-role="header">
-						<h1 style="margin-left:20%">Scores zoeken</h1>
-					</div>
-							<form action="scores.php" method="get" style="font-size:20px">
-                            <br>
-							<div data-type="horizontal" data-mini="true" style="margin-left:20%;width: 56%">
-								<label for="teamcode">Selecteer het team:</label>
-								<br>
-								<select name="teamcode" id="teamcode" data-native-menu="false" data-mini="true" >
-									<option value="">Teams</option>
-									<option value="D1">D1</option>
-									<option value="D2">D2</option>
-									<option value="D3">D3</option>
-									<option value="H1">H1</option>
-									<option value="H2">H2</option>
-									<option value="H3">H3</option>
-									<option value="H4">H4</option>
-									<option value="M1">M1</option>
-									<option value="M2">M2</option>
-									<option value="M3">M3</option>
-								</select>
-							</div>
-							<br><br>
-							<label for="lidnr" style="margin-left:20%;padding-right:50%">Lidnr:</label>
-                            <br>
-                            <input name="lidnr" id="lidnr" type="number" placeholder="Lidnr" value="" data-mini="true" style="margin-left:20%;width: 56.2%" >
-                            <br>
-							</div>
-							<br>
-							<label class="ui-hidden-accessible" for="verzend" style="margin-left:20%;width: 56%">Verzend:</label>
-							<button class="ui-shadow ui-btn ui-corner-all ui-mini" id="verzend" type="submit" name="verzend" style="margin-left:20%;width: 56.2%">Zoek!</button>
-						</form>
-						<div class="ui-body ui-corner-all" style="margin-left:19.4%;width:56%;font-size:20px;">
-							<?php
-								// Hier wordt gecontroleerd of er op de zoek-knop is geklikt
-								
-								if(isset($_GET["verzend"]))
-								{                       
-                                    $rows_get = mysqli_num_rows($toegevoegd);
-                                    if ($rows_get >0)
-                                    {
-                                        echo"<br><strong style=font-size:27px;>Zoekresultaten:<br><br></strong>";
-                                    }
-                                    else {
-                                        echo"<br><strong style=font-size:27px;>Er is een fout opgetreden:<br><br></strong>";
-                                        echo "De zoekquery heeft geen resultaten opgeleverd. Controleer de zoekcriteria en probeer het opnieuw.<br><br><br><br><br><br><br><br>";
-                                    }
-									
-									while(list($teamcode, $lidnr, $gewonnen, $verloren) = mysqli_fetch_row($toegevoegd))
-									{
+                    <h1 class="u-pb--sm">Inloggen:</h1>
+                    <div class="fluid-grid">
+                    <div class="fluid-grid__item js-form-login__option u-1/2@screen-large-up">
+                        <p class="u-mb--xs" ><strong>Heeft u al een account?</strong><br>Log dan hier in!</p>
+                        <div class="form-login--existing-user">
+                            <form action="login.php" method="POST" style="font-size:20px">
+                                <label for="email">Gebruikersnaam of email:<label style=color:red>*</label></label>
+                                <input type="text" id="email" name="email" placeholder="Gebruikersnaam of email" value="<?php if($camefromregister == true){echo"".$_SESSION['newusermail']."";} else {echo"";} ?>" required><br>
 
-										echo"<strong>Teamcode:</strong> $teamcode <br><strong>Lidnr:</strong> $lidnr <br><strong>Gewonnen:</strong> $gewonnen <br> <strong>Verloren:</strong> $verloren <br>";
-										echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";
-									}
-                                    
+                                <label for="password">Wachtwoord:<label style=color:red>*</label></label>
+                                <input type="password" id="password" name="password" placeholder="Wachtwoord" required><br>
 
-								}
-                                else {
-                                    echo"<h3><strong style=font-size:27px;>Dit zijn alle scores:<br><br></strong></h3>";
-                                    $mysql = mysqli_connect($server,$user,$pass,$db) or die("Fout: Er is geen verbinding met de MySQL-server tot stand gebracht!");
-                                    // Gegevens opvragen uit de database
-                                    $toegevoegd = mysqli_query($mysql,"SELECT * FROM `scores` limit 5") or die("De selectquery op de database is mislukt!");
-                                    
-            
-                                    // Get the current page number from the query string
-                                    $page = isset($_GET['page']) ? $_GET['page'] : 1;
-            
-                                    // Calculate the offset for the SQL query
-                                    $offset = ($page - 1) * 5;
-            
-                                    // Build the SQL query with the LIMIT and OFFSET clauses
-                                    $sql = "SELECT * FROM scores ORDER BY teamcode ASC LIMIT 5 OFFSET $offset";
-            
-                                    // Execute the query and fetch the results
-                                    $result = mysqli_query($mysql, $sql);
-            
-                                    // Loop through the results and display them
-                                    while ($row = mysqli_fetch_assoc($result)) {
-                                        echo "<strong>Teamcode:</strong> {$row['teamcode']} <br><strong>Lidnr:</strong> {$row['lidnr']}<br><strong>Gewonnen:</strong> {$row['gewonnen']} <br> <strong>Verloren:</strong> {$row['verloren']} <br>";
-                                        echo"▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬<br>";
-            
-                                    }
-                                    // Display links to the previous and next pages
-                                    echo "<div>";
-                                    if ($page > 1) {
-                                        echo "<br><a href='scores.php?page=" . ($page - 1) . "'>Previous</a>";
-                                    }
-                                    if (mysqli_num_rows($result) == 5) {
-                                        echo "<a href='scores.php?page=" . ($page + 1) . "' style='margin-left:90px'>Next</a>";
-                                    }
-                                    echo "</div><br>";
-                                    mysqli_close($mysql) or die("Het verbreken van de verbinding met de MySQL-server is mislukt!");
-                                }
+                                <input  style="background:-webkit-linear-gradient(left,#4B91F1 0%, #4B91F1 100%);background:linear-gradient(to left,purple 0%, #4B91F1 100%)" id="register" type="submit" name="login" value="Login">
+                                <br>
+                            </form>
+                        </div>
+                    </div>
 
-								?>
-						</div>
-					</div>
+                    
+
+                    <div class="fluid-grid__item js-form-login__option u-1/2@screen-large-up">
+                        <div class="registreren">
+                            <form action="login.php" method="POST" style="font-size:20px">
+                                <p class="u-mb--xs"><strong>Geen account maar wel lid?</strong><br>Vul hier uw lidnr in om een account aan te maken.</p>
+                                <label for="lidnr">Lidnr:<label style=color:red>*</label></label>
+                                <input type="number" id="lidnr" name="lidnr" placeholder="Lidnr" required style="font-size:15px"><br>
+                                <input style="background:-webkit-linear-gradient(left,#4B91F1 0%, #4B91F1 100%);background:linear-gradient(to left,purple 0%, #4B91F1 100%)" id="register" type="submit" name="submit" value="Maak een account">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui-body ui-corner-all" style="text-align:center;font-size:20px;">
+                    <?php
+                        if ($registererror == true)
+                        {
+                            echo"Lidnr: $lidnr is niet gevonden. Controleer het lidnr en probeer het opnieuw. Bent u recent lid geworden van D Tennis? Dan kan het zijn dat uw aanmelding nog niet verwerkt is probeer het de volgende dag nog een keer.";
+                        }
+                        if ($registerduplicate == true)
+                        {
+                            echo"Er bestaat al een account met Lidnr: $lidnr. Meld u alstublieft aan met uw gebruikersnaam of e-mailadres en wachtwoord";
+                        }
+                        if ($loginerror == true)
+                        {
+                            echo"De combinatie van het e-mailadres en wachtwoord is niet geldig.";
+                        }    
+                    ?>
 				</div>
 				<!-- einde body input-->
 
@@ -392,7 +398,7 @@
 
                 <br><br><br>
 				<!-- footer -->
-				<section id="mk-footer" class=" disable-on-mobile" role="contentinfo" itemscope="itemscope" itemtype="https://schema.org/WPFooter" >
+				<section id="mk-footer" class=" disable-on-mobile" role="contentinfo" itemscope="itemscope" itemtype="https://schema.org/WPFooter" style="margin-top:6%">
 					<div class="footer-wrapper mk-grid">
 						<div class="mk-padding-wrapper">
 							<div class="mk-col-1-3">

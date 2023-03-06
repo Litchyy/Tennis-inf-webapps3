@@ -35,7 +35,7 @@
 	<head>
         <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />			
         <!-- favicon -->
-        <link rel="shortcut icon" href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/afbeeldingen/d-tennis-logo.png"  />
+        <link rel="shortcut icon" href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/afbeeldingen/TVA-logo.png"  />
 
         <!-- css for social icons (footer)-->
         <link rel='stylesheet' id='jupiter-donut-shortcodes-css' href='https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Css/footer-social.css' type='text/css' media='all' />
@@ -78,8 +78,8 @@
 			}
 			body { background-color:#fff; } .hb-custom-header #mk-page-introduce, 
 			.mk-header { background-color:#ffffff;background-image:url(http://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/afbeeldingen/clubhuis2.jpg);background-size:cover;-webkit-background-size:cover;-moz-background-size:cover; } .hb-custom-header > div, 
-			.mk-header-bg { background:-webkit-linear-gradient(left,#4B91F1 0%, #4B91F1 100%);background:linear-gradient(to right,#4B91F1 0%, #4B91F1 100%) } 
-			.mk-classic-nav-bg { background:-webkit-linear-gradient(left,#4B91F1 0%, #4B91F1 100%);background:linear-gradient(to right,#4B91F1 0%, #4B91F1 100%) } 
+			.mk-header-bg { background:-webkit-linear-gradient(left,#4B91F1 0%, #4B91F1 100%);background:linear-gradient(to left,purple 0%, #4B91F1 100%) } 
+			.mk-classic-nav-bg { background:-webkit-linear-gradient(left,#4B91F1 0%, #4B91F1 100%);background:linear-gradient(to left,purple 0%, #4B91F1 100%) } 
 			.master-holder-bg { background-color:#fff; } 
 			#mk-footer { background-color:#000000;background-repeat:no-repeat;background-position:center center; } 
 			#mk-boxed-layout { -webkit-box-shadow:0 0 0px rgba(0, 0, 0, 0); -moz-box-shadow:0 0 0px rgba(0, 0, 0, 0); box-shadow:0 0 0px rgba(0, 0, 0, 0); } 
@@ -94,7 +94,7 @@
 			.header-style-3 .mk-header-padding-wrapper { padding-top:211px; } 
 			.mk-process-steps[max-width~="950px"] ul::before { display:none !important; } 
 			.mk-process-steps[max-width~="950px"] li { margin-bottom:30px !important; width:100% !important; text-align:center; } 
-			.mk-event-countdown-ul[max-width~="750px"] li { width:90%; display:block; margin:0 auto 15px; } body { font-family:Open Sans } 
+			.mk-event-countdown-ul[max-width~="750px"] li { width:90%; display:block; margin:0 auto 15px; } body { font-family: graphik,arial,helvetica,sans-serif; } 
 			@font-face { font-family:'star'; src:url('https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/stylesheet/fonts/star/font.eot'); 
 			src:url('https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/stylesheet/fonts/star/font.eot?#iefix') format('embedded-opentype'), 
 			url('https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/stylesheet/fonts/star/font.woff') format('woff'), url('https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/stylesheet/fonts/star/font.ttf') format('truetype'), url('https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/stylesheet/fonts/star/font.svg#star') format('svg'); font-weight:normal; font-style:normal; } 
@@ -122,7 +122,7 @@
 		</style>
 		<style type="text/css" id="wp-custom-css">
 			.menu-button a { 
-			border: 2px solid #E47405; /* button border width and color */
+			border: 2px solid #4b0082; /* button border width and color */
 			color: #E47405;    /* text color */
 			line-height: initial;  /* reset the line-height. Let padding control size */
 			padding: 10px 20px;
@@ -132,7 +132,7 @@
 			}
 			.menu-button a:hover {
 			color: white; /* change the hover text color */
-			background-color: #E47405;  /* fill the background on hover */
+			background-color: #9932cc;  /* fill the background on hover */
 			}
 		</style>
         
@@ -161,7 +161,7 @@
 			}
 					
 		</script>
-    	<script type="text/javascript">window.abb = {};php = {};window.PHP = {};PHP.ajax = "https://ltcwaterwijk.nl/wp-admin/admin-ajax.php";PHP.wp_p_id = "13534";var mk_header_parallax, mk_banner_parallax, mk_page_parallax, mk_footer_parallax, mk_body_parallax;var mk_images_dir = "https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/images",mk_theme_js_path = "https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/js",mk_theme_dir = "https://ltcwaterwijk.nl/wp-content/themes/jupiter",mk_captcha_placeholder = "Enter Captcha",mk_captcha_invalid_txt = "Invalid. Try again.",mk_captcha_correct_txt = "Captcha correct.",mk_responsive_nav_width = 1140,mk_vertical_header_back = "Back",mk_vertical_header_anim = "1",mk_check_rtl = true,mk_grid_width = 1140,mk_ajax_search_option = "fullscreen_search",mk_preloader_bg_color = "#d40e27",mk_accent_color = "#e57406",mk_go_to_top =  "true",mk_smooth_scroll =  "true",mk_show_background_video =  "true",mk_preloader_bar_color = "#e57406",mk_preloader_logo = "/Informatica/.Tennis PO/afbeeldingen/d-tennis-logo.png";var mk_header_parallax = false,mk_banner_parallax = false,mk_footer_parallax = false,mk_body_parallax = false,mk_no_more_posts = "No More Posts",mk_typekit_id   = "",mk_google_fonts = ["Open Sans:100italic,200italic,300italic,400italic,500italic,600italic,700italic,800italic,900italic,100,200,300,400,500,600,700,800,900"],mk_global_lazyload = true;</script>
+    	<script type="text/javascript">window.abb = {};php = {};window.PHP = {};PHP.ajax = "https://ltcwaterwijk.nl/wp-admin/admin-ajax.php";PHP.wp_p_id = "13534";var mk_header_parallax, mk_banner_parallax, mk_page_parallax, mk_footer_parallax, mk_body_parallax;var mk_images_dir = "https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/images",mk_theme_js_path = "https://ltcwaterwijk.nl/wp-content/themes/jupiter/assets/js",mk_theme_dir = "https://ltcwaterwijk.nl/wp-content/themes/jupiter",mk_captcha_placeholder = "Enter Captcha",mk_captcha_invalid_txt = "Invalid. Try again.",mk_captcha_correct_txt = "Captcha correct.",mk_responsive_nav_width = 1140,mk_vertical_header_back = "Back",mk_vertical_header_anim = "1",mk_check_rtl = true,mk_grid_width = 1140,mk_ajax_search_option = "fullscreen_search",mk_preloader_bg_color = "#d40e27",mk_accent_color = "#e57406",mk_go_to_top =  "true",mk_smooth_scroll =  "true",mk_show_background_video =  "true",mk_preloader_bar_color = "#e57406",mk_preloader_logo = "/Informatica/.Tennis PO/afbeeldingen/TVA-logo-zwart.png";var mk_header_parallax = false,mk_banner_parallax = false,mk_footer_parallax = false,mk_body_parallax = false,mk_no_more_posts = "No More Posts",mk_typekit_id   = "",mk_google_fonts = ["Open Sans:100italic,200italic,300italic,400italic,500italic,600italic,700italic,800italic,900italic,100,200,300,400,500,600,700,800,900"],mk_global_lazyload = true;</script>
 		<!-- einde tel menu-->
 
 	</head>
@@ -192,27 +192,27 @@
 											<img class="mk-desktop-logo dark-logo  lazyload"
 												title="D Tennis"
 												alt="D Tennis"
-												src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Informatica/.Tennis PO/afbeeldingen/d-tennis-logo.png" decoding="async" />
+												src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Informatica/.Tennis PO/afbeeldingen/TVA-logo-zwart.png" decoding="async" />
 											<noscript><img class="mk-desktop-logo dark-logo "
 												title="D Tennis"
 												alt="D Tennis"
-												src="/Informatica/.Tennis PO/afbeeldingen/d-tennis-logo.png" data-eio="l" /></noscript>
+												src="/Informatica/.Tennis PO/afbeeldingen/TVA-logo-zwart.png" data-eio="l" /></noscript>
 											<img class="mk-desktop-logo light-logo  lazyload"
 												title="D Tennis"
 												alt="D Tennis"
-												src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Informatica/.Tennis PO/afbeeldingen/d-tennis-logo.png" decoding="async" />
+												src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Informatica/.Tennis PO/afbeeldingen/TVA-logo-zwart.png" decoding="async" />
 											<noscript><img class="mk-desktop-logo light-logo "
 												title="D Tennis"
 												alt="D Tennis"
-												src="/Informatica/.Tennis PO/afbeeldingen/d-tennis-logo.png" data-eio="l" /></noscript>
+												src="/Informatica/.Tennis PO/afbeeldingen/TVA-logo-zwart.png" data-eio="l" /></noscript>
 											<img class="mk-sticky-logo  lazyload"
 												title="D Tennis"
 												alt="D Tennis"
-												src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Informatica/.Tennis PO/afbeeldingen/d-tennis-logo.png" decoding="async" />
+												src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="/Informatica/.Tennis PO/afbeeldingen/TVA-logo-zwart.png" decoding="async" />
 											<noscript><img class="mk-sticky-logo "
 												title="D Tennis"
 												alt="D Tennis"
-												src="/Informatica/.Tennis PO/afbeeldingen/d-tennis-logo.png" data-eio="l" /></noscript>
+												src="/Informatica/.Tennis PO/afbeeldingen/TVA-logo-zwart.png" data-eio="l" /></noscript>
 										</a>
 									</div>
 								</div>
@@ -228,7 +228,8 @@
 											<li id="menu-item-8255" class="menu-item menu-item-type-post_type menu-item-object-page no-mega-menu"><a class="menu-item-link js-smooth-scroll"  href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Pages/scores.php">Scores</a></li>
 											<li id="menu-item-8713" class="menu-item menu-item-type-post_type menu-item-object-page no-mega-menu"><a class="menu-item-link js-smooth-scroll"  href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Pages/boetes.php">Boetes</a></li>
 											<li id="menu-item-14864" class="menu-button menu-item menu-item-type-post_type menu-item-object-page no-mega-menu"><a class="menu-item-link js-smooth-scroll"  href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Pages/aangemeld.php">Lid worden?</a></li>
-										</ul>
+                                            <li id="menu-item-14864" class="menu-button menu-item"><a class="menu-item-link js-smooth-scroll"  href="<?php if(isset($_SESSION['email'])){echo"account.php";} else{ echo "https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Pages/login.php";} ?>"><?php if(isset($_SESSION['email'])){echo"".$_SESSION['voornaam']."";} else{ echo "Inloggen";} ?></a></li>
+                                        </ul>
 									</nav>
 								</div>
 							</div>
@@ -272,7 +273,8 @@
 										<li id="responsive-menu-item-8255" class="menu-item menu-item-type-post_type menu-item-object-page"><a class="menu-item-link js-smooth-scroll"  href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Pages/scores.php">Scores</a></li>
 										<li id="responsive-menu-item-8713" class="menu-item menu-item-type-post_type menu-item-object-page"><a class="menu-item-link js-smooth-scroll"  href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Pages/boetes.php">Boetes</a></li>
 										<li id="responsive-menu-item-14864" class="menu-button menu-item menu-item-type-post_type menu-item-object-page"><a class="menu-item-link js-smooth-scroll"  href="https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Pages/aangemeld.php">Lid worden?</a></li>
-									</ul>
+                                        <li id="menu-item-14864" class="menu-button menu-item"><a class="menu-item-link js-smooth-scroll"  href="<?php if(isset($_SESSION['email'])){echo"account.php";} else{ echo "https://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/Pages/login.php";} ?>"><?php if(isset($_SESSION['email'])){echo"".$_SESSION['voornaam']."";} else{ echo "Inloggen";} ?></a></li>
+                                    </ul>
 								</nav>
 							</div>
 						</div>
@@ -312,7 +314,7 @@
                             <br>
 							<input name="achternaam" id="achternaam" type="text" placeholder="Achternaam" value="" data-mini="true" style=";margin-left:20%;width: 56.2%" required>
                             <br><br>
-                            <label for="geboortejaar" style="margin-left:20%;padding-right:50%">Geboortejaar:<label style=color:red>*</label></label>
+                            <label for="geboortejaar" style="margin-left:20%;padding-right:50%">Geboortedatum:<label style=color:red>*</label></label>
 							<br>
 							<input name="geboortejaar" id="geboortejaar" type="date" value="" data-highlight="true" data-mini="true" style="margin-left:20%;width: 56.2%;border:0;" required>
                             <br><br>
@@ -392,7 +394,7 @@
                                     //explode the date to get month, day and year
                                     $birthDate = explode("/", $birthDate);
                                     //get age from date or birthdate
-                                    $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
+                                    $age = (date("dm", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
                                         ? ((date("Y") - $birthDate[2]) - 1)
                                         : (date("Y") - $birthDate[2]));
 
@@ -455,8 +457,8 @@
 								<section id="text-4" class="widget widget_text">
 									<div class="textwidget">
 										<div style="text-align: center;">
-											<img class="alignnone size-medium wp-image-8260 lazyload" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADtAQMAAAA/cNqTAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAB9JREFUaN7twQENAAAAwqD3T20PBxQAAAAAAAAAAHBoJBsAAVxmHVQAAAAASUVORK5CYII=" alt="" width="300" height="237" data-src="http://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/afbeeldingen/d-tennis-logo.png" decoding="async" />
-											<noscript><img class="alignnone size-medium wp-image-8260" src="http://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/afbeeldingen/d-tennis-logo.png" alt="" width="600" height="237" data-eio="l" /></noscript>
+											<img class="alignnone size-medium wp-image-8260 lazyload" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADtAQMAAAA/cNqTAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAB9JREFUaN7twQENAAAAwqD3T20PBxQAAAAAAAAAAHBoJBsAAVxmHVQAAAAASUVORK5CYII=" alt="" width="300" height="237" data-src="http://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/afbeeldingen/TVA-logo.png" decoding="async" />
+											<noscript><img class="alignnone size-medium wp-image-8260" src="http://v21dkoeve.helenparkhurst.net/Informatica/.Tennis%20PO/afbeeldingen/TVA-logo.png" alt="" width="600" height="237" data-eio="l" /></noscript>
 										</div>
 										<div style="padding-bottom: 40px;"></div>
 									</div>

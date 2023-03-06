@@ -1,0 +1,5 @@
+@media (max-width: 768px) {
+    .tel-font {
+      font-size: 20px; /* Set a smaller font size for screens smaller than 768 pixels wide */
+    }
+  }
